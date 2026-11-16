@@ -1,0 +1,40 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/site?slug=home"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/site?slug=sitemap"
+  status = 200
+[[redirects]]
+  from = "/insights/:post"
+  to = "/.netlify/functions/site?slug=insights&post=:post"
+  status = 200
+[[redirects]]
+  from = "/:slug"
+  to = "/.netlify/functions/site?slug=:slug"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
